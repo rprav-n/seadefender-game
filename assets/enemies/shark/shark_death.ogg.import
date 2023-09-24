@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/shark_death.ogg-408c0e526d1e058ceef09a532aa0a24e.oggstr"
+
+[deps]
+
+source_file="res://assets/enemies/shark/shark_death.ogg"
+dest_files=[ "res://.import/shark_death.ogg-408c0e526d1e058ceef09a532aa0a24e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

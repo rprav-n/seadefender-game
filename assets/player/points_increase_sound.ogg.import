@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/points_increase_sound.ogg-413e9d8c53df8f5dfba6606276e99a5d.oggstr"
+
+[deps]
+
+source_file="res://assets/player/points_increase_sound.ogg"
+dest_files=[ "res://.import/points_increase_sound.ogg-413e9d8c53df8f5dfba6606276e99a5d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

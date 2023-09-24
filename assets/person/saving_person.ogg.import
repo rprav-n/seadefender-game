@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/saving_person.ogg-d0037cae1047c8e83605048e70d01a81.oggstr"
+
+[deps]
+
+source_file="res://assets/person/saving_person.ogg"
+dest_files=[ "res://.import/saving_person.ogg-d0037cae1047c8e83605048e70d01a81.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

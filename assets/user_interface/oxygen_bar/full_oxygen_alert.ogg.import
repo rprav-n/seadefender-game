@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/full_oxygen_alert.ogg-100f54b48ce518aa0fefa4a0fa345aaa.oggstr"
+
+[deps]
+
+source_file="res://assets/user_interface/oxygen_bar/full_oxygen_alert.ogg"
+dest_files=[ "res://.import/full_oxygen_alert.ogg-100f54b48ce518aa0fefa4a0fa345aaa.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

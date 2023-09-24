@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/mini_sub_destroy.ogg-2a453b2e0bb861bc23a3cad7fdccc526.oggstr"
+
+[deps]
+
+source_file="res://assets/enemies/mini_submarine/mini_sub_destroy.ogg"
+dest_files=[ "res://.import/mini_sub_destroy.ogg-2a453b2e0bb861bc23a3cad7fdccc526.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
