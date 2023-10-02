@@ -14,6 +14,7 @@ public class Bullet : Area2D
     {
         base._Ready();
         animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        animatedSprite.Frame = 0;
         animatedSprite.Play();
 
         this.RotationDegrees = r.Next(-3, 3);

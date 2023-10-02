@@ -53,6 +53,7 @@ public class Player : Area2D
 			var bulletInstance = BulletScene.Instance<Bullet>();
             GetTree().CurrentScene.AddChild(bulletInstance);
 
+
             if (animatedSprite.FlipH)
 			{
 				bulletInstance.direction.x = -1;

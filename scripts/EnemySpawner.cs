@@ -1,33 +1,50 @@
 using Godot;
 using System;
+using System.Collections;
 
 public class EnemySpawner : Node2D
 {
 
     Random r = new Random();
-    private Node left, right;
+    private Node2D left, right;
     private PackedScene SharkScene;
+
+    const int TOTAL_SPAWNS = 4;
 
     public override void _Ready()
     {
-        left = GetNode<Node>("Left");
-        right = GetNode<Node>("Right");
+        left = GetNode<Node2D>("Left");
+        right = GetNode<Node2D>("Right");
         SharkScene = GD.Load<PackedScene>("res://scenes/Shark.tscn");
     }
 
     private void _on_SpawnEnemyTimer_timeout()
     {
-        var randomSpawnPointNumber = r.Next(1, 5);
+        ArrayList availableSpawnPoints  = new ArrayList() { 1, 2, 3, 4 };
+        ArrayList usedSpawnPoints = new ArrayList();
 
-        var selectedSideNode = left;
-
-        var spawnRight = Convert.ToBoolean(r.Next(0, 2)) ;
-        if (spawnRight)
+        for (var i = 0; i < TOTAL_SPAWNS; i++)
         {
-            selectedSideNode = right;
+            var randomPositionIndexPoint = r.Next(0, availableSpawnPoints.Count);
+
+            usedSpawnPoints.Add(availableSpawnPoints[randomPositionIndexPoint]);
+
+            availableSpawnPoints.RemoveAt(randomPositionIndexPoint);
         }
 
-        var selectedSpawnPosition = selectedSideNode.GetNode<Position2D>(randomSpawnPointNumber.ToString());
+        foreach (int spawnPoint in usedSpawnPoints)
+        {
+            spawnEnemy(spawnPoint);
+        }
+    }
+
+    private void spawnEnemy(int positionPoint)
+    {
+        var randomNumber = r.Next(0, 2);
+
+        var selectedSideNode = randomNumber == 0 ? left : right;
+
+        var selectedSpawnPosition = selectedSideNode.GetNode<Position2D>(positionPoint.ToString());
 
         var sharkInstance = SharkScene.Instance<Shark>();
 
@@ -35,11 +52,10 @@ public class EnemySpawner : Node2D
 
         GetTree().CurrentScene.AddChild(sharkInstance);
 
-        if (spawnRight)
+        if (selectedSideNode == right)
         {
             sharkInstance.ChangeDirection();
         }
     }
-
   
 }
