@@ -1,20 +1,23 @@
 using Godot;
 using System;
 
-public class Bullet : AnimatedSprite
+public class Bullet : Area2D
 {
     public Vector2 direction = new Vector2(1, 0);
     private const int SPEED = 300;
 
     Random r = new Random();
 
+    private AnimatedSprite animatedSprite;
+
     public override void _Ready()
     {
         base._Ready();
-        this.Play();
+        animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        animatedSprite.Play();
 
-        this.RotationDegrees = r.Next(-7, 7);
-        direction = direction.Rotated(this.Rotation);
+        this.RotationDegrees = r.Next(-3, 3);
+        direction = direction.Rotated(this.Rotation) * (animatedSprite.FlipH ? -1 : 1);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -25,5 +28,10 @@ public class Bullet : AnimatedSprite
     private void _on_VisibilityNotifier2D_screen_exited()
     {
         this.QueueFree();
+    }
+
+    public void ChangeFlipHTo(bool val)
+    {
+        animatedSprite.FlipH = val;
     }
 }

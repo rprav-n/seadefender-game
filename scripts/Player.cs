@@ -1,13 +1,14 @@
 using Godot;
 using System;
 
-public class Player : AnimatedSprite
+public class Player : Area2D
 {
 
 	private Vector2 velocity;
     private Vector2 SPEED = new Vector2(125, 90);
 
     private PackedScene BulletScene;
+	private AnimatedSprite animatedSprite;
 	private bool canShoot = true;
 
 	private Timer reloadTimer;
@@ -18,6 +19,7 @@ public class Player : AnimatedSprite
         base._Ready();
         BulletScene = GD.Load<PackedScene>("res://scenes/Bullet.tscn");
 		reloadTimer = GetNode<Timer>("ReloadTimer");
+		animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
     }
 
 	public override void _Process(float delta)
@@ -40,7 +42,7 @@ public class Player : AnimatedSprite
 	{
 		if (velocity.x != 0)
 		{
-			this.FlipH = velocity.x == -1;
+			this.animatedSprite.FlipH = velocity.x == -1;
 		}
     }
 
@@ -49,16 +51,17 @@ public class Player : AnimatedSprite
 		if (Input.IsActionPressed("shoot") && canShoot)
 		{
 			var bulletInstance = BulletScene.Instance<Bullet>();
-			if (this.FlipH)
+            GetTree().CurrentScene.AddChild(bulletInstance);
+
+            if (animatedSprite.FlipH)
 			{
 				bulletInstance.direction.x = -1;
-				bulletInstance.FlipH = true;
+				bulletInstance.ChangeFlipHTo(true);
 				bulletInstance.GlobalPosition = this.GlobalPosition - new Vector2(BULLETOFFSET, 0);
             } else
 			{
                 bulletInstance.GlobalPosition = this.GlobalPosition + new Vector2(BULLETOFFSET, 0);
             }
-            GetTree().CurrentScene.AddChild(bulletInstance);
 
 			canShoot = false;
 			reloadTimer.Start();
