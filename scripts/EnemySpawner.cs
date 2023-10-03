@@ -8,6 +8,7 @@ public class EnemySpawner : Node2D
     Random r = new Random();
     private Node2D left, right;
     private PackedScene SharkScene;
+    private PackedScene PersonScene;
 
     const int TOTAL_SPAWNS = 4;
 
@@ -16,6 +17,7 @@ public class EnemySpawner : Node2D
         left = GetNode<Node2D>("Left");
         right = GetNode<Node2D>("Right");
         SharkScene = GD.Load<PackedScene>("res://scenes/Shark.tscn");
+        PersonScene = GD.Load<PackedScene>("res://scenes/Person.tscn");
     }
 
     private void _on_SpawnEnemyTimer_timeout()
@@ -41,21 +43,38 @@ public class EnemySpawner : Node2D
     private void spawnEnemy(int positionPoint)
     {
         var randomNumber = r.Next(0, 2);
-
         var selectedSideNode = randomNumber == 0 ? left : right;
-
         var selectedSpawnPosition = selectedSideNode.GetNode<Position2D>(positionPoint.ToString());
-
+        
         var sharkInstance = SharkScene.Instance<Shark>();
-
         sharkInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
-
+        
         GetTree().CurrentScene.AddChild(sharkInstance);
 
         if (selectedSideNode == right)
         {
             sharkInstance.ChangeDirection();
         }
+    }
+
+    private void _on_SpawnPersonTimer_timeout() {
+
+        var positionPoint = r.Next(1, 5);
+
+        var randomNumber = r.Next(0, 2);
+        var selectedSideNode = randomNumber == 0 ? left : right;
+        var selectedSpawnPosition = selectedSideNode.GetNode<Position2D>(positionPoint.ToString());
+
+        var personInstance = PersonScene.Instance<Person>();
+        personInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
+
+        GetTree().CurrentScene.AddChild(personInstance);
+
+        if (selectedSideNode == right)
+        {
+            personInstance.ChangeDirection();
+        }
+
     }
   
 }

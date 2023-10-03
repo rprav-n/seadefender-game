@@ -27,15 +27,15 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[sub_resource type="CapsuleShape2D" id=6]
-radius = 5.0
-height = 6.0
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 3.5, 6.5 )
 
-[node name="Player" type="Area2D"]
+[node name="Player" type="Area2D" groups=["Player"]]
 script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 5 )
+frame = 1
 playing = true
 offset = Vector2( -1, -2 )
 
@@ -44,6 +44,7 @@ wait_time = 0.15
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.499998, 0.5 )
 rotation = 1.5708
 shape = SubResource( 6 )
 
