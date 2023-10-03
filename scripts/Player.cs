@@ -17,6 +17,8 @@ public class Player : Area2D
 
 	private Global global;
 	
+	private string state = "default";
+	
 	public override void _Ready()
 	{
 		base._Ready();
@@ -29,20 +31,29 @@ public class Player : Area2D
 
 	public override void _Process(float delta)
 	{
-		velocity.x = Input.GetAxis("move_left", "move_right");
-		velocity.y = Input.GetAxis("move_up", "move_down");
-
-		playerDirection();
-		playerShoot();
-
-		velocity = velocity.Normalized();
-		
-		global.oxygenLevel -= OXYGEN_DECREASE_SPEED * delta;
+		if (state == "default") 
+		{
+			playerInput();
+			playerDirection();
+			playerShoot();
+			playerOxygen();	
+		}
 	}
 
 	public override void _PhysicsProcess(float delta)
 	{
-		this.GlobalPosition += velocity * SPEED * delta;
+		if (state == "default") 
+		{
+			playerMovement();
+		}
+	}
+
+	private void playerInput() 
+	{
+		velocity.x = Input.GetAxis("move_left", "move_right");
+		velocity.y = Input.GetAxis("move_up", "move_down");
+
+		velocity = velocity.Normalized();
 	}
 
 	private void playerDirection()
@@ -74,6 +85,16 @@ public class Player : Area2D
 			canShoot = false;
 			reloadTimer.Start();
 		}
+	}
+
+	private void playerOxygen() 
+	{
+		global.oxygenLevel -= OXYGEN_DECREASE_SPEED * GetProcessDeltaTime();
+	}
+
+	private void playerMovement() 
+	{
+		this.GlobalPosition += velocity * SPEED * GetPhysicsProcessDeltaTime();
 	}
 
 	private void _on_ReloadTimer_timeout()
