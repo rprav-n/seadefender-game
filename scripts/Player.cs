@@ -16,6 +16,7 @@ public class Player : Area2D
 	const float OXYGEN_DECREASE_SPEED = 2.5f;
 
 	private Global global;
+	private GameEvent gameEvent;
 	
 	private string state = "default";
 	
@@ -27,6 +28,15 @@ public class Player : Area2D
 		animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
 		
 		global = GetNode<Global>("/root/Global");
+		gameEvent = GetNode<GameEvent>("/root/GameEvent");
+		
+		connectSignals();
+	}
+	
+	private void connectSignals() 
+	{
+		gameEvent.Connect("fullCrewOxygenRefuel", this, "_on_fullCrewOxygenRefuel");
+		gameEvent.Connect("lessCrewOxygenRefuel", this, "_on_lessCrewOxygenRefuel");
 	}
 
 	public override void _Process(float delta)
@@ -101,4 +111,15 @@ public class Player : Area2D
 	{
 		canShoot = true;
 	}
+	
+	private void _on_fullCrewOxygenRefuel() 
+	{
+		state = "full_people_refuel";
+	}
+	
+	private void _on_lessCrewOxygenRefuel() 
+	{
+		state = "less_people_refuel";
+	}
+	
 }

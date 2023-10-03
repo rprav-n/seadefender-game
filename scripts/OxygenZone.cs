@@ -5,10 +5,12 @@ public class OxygenZone : Area2D
 {
 
 	private Global global;
+	private GameEvent gameEvent;
 
 	public override void _Ready()
 	{
 		global = GetNode<Global>("/root/Global");
+		gameEvent = GetNode<GameEvent>("/root/GameEvent");
 	}
 
 	public override void _Process(float delta)
@@ -22,10 +24,10 @@ public class OxygenZone : Area2D
 		{
 			if (global.savedPeopleCount >= 7) 
 			{
-				GD.Print("Full");
+				gameEvent.EmitSignal("fullCrewOxygenRefuel");
 			} else 
 			{
-				GD.Print("Refueled too early");
+				gameEvent.EmitSignal("lessCrewOxygenRefuel");
 			}
 		}
 	}
