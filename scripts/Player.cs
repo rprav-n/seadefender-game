@@ -6,20 +6,25 @@ public class Player : Area2D
 
 	private Vector2 velocity;
 	private Vector2 SPEED = new Vector2(125, 90);
-
+	
 	private PackedScene BulletScene;
 	private AnimatedSprite animatedSprite;
 	private bool canShoot = true;
 
 	private Timer reloadTimer;
 	const int BULLETOFFSET = 7;
+	const float OXYGEN_DECREASE_SPEED = 2.5f;
 
+	private Global global;
+	
 	public override void _Ready()
 	{
 		base._Ready();
 		BulletScene = GD.Load<PackedScene>("res://scenes/Bullet.tscn");
 		reloadTimer = GetNode<Timer>("ReloadTimer");
 		animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+		
+		global = GetNode<Global>("/root/Global");
 	}
 
 	public override void _Process(float delta)
@@ -31,6 +36,8 @@ public class Player : Area2D
 		playerShoot();
 
 		velocity = velocity.Normalized();
+		
+		global.oxygenLevel -= OXYGEN_DECREASE_SPEED * delta;
 	}
 
 	public override void _PhysicsProcess(float delta)
