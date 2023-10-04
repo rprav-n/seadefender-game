@@ -14,6 +14,7 @@ public class Player : Area2D
 	private Timer reloadTimer;
 	const int BULLETOFFSET = 7;
 	const float OXYGEN_DECREASE_SPEED = 2.5f;
+	const float OXYGEN_INCREASE_SPEED = 20f;
 
 	private Global global;
 	private GameEvent gameEvent;
@@ -46,7 +47,13 @@ public class Player : Area2D
 			playerInput();
 			playerDirection();
 			playerShoot();
-			playerOxygen();	
+			playerLoseOxygen();	
+		} else if (state == "less_people_refuel") 
+		{
+			oxygenRefuel();
+		} else if (state == "full_people_refuel") 
+		{
+			oxygenRefuel();
 		}
 	}
 
@@ -97,14 +104,16 @@ public class Player : Area2D
 		}
 	}
 
-	private void playerOxygen() 
-	{
-		global.oxygenLevel -= OXYGEN_DECREASE_SPEED * GetProcessDeltaTime();
-	}
-
 	private void playerMovement() 
 	{
 		this.GlobalPosition += velocity * SPEED * GetPhysicsProcessDeltaTime();
+	}
+
+	private void playerLoseOxygen() 
+	{
+		var oxygenDecreaseDelta = OXYGEN_DECREASE_SPEED * GetProcessDeltaTime();
+		global.oxygenLevel = Mathf.MoveToward(global.oxygenLevel, 0, oxygenDecreaseDelta);
+		
 	}
 
 	private void _on_ReloadTimer_timeout()
@@ -122,4 +131,13 @@ public class Player : Area2D
 		state = "less_people_refuel";
 	}
 	
+	private void oxygenRefuel() 
+	{
+		global.oxygenLevel += OXYGEN_INCREASE_SPEED * GetProcessDeltaTime();
+		
+		if (global.oxygenLevel >= 100) 
+		{
+			state = "default";	
+		}
+	}
 }
