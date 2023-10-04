@@ -61,4 +61,8 @@ position = Vector2(0.500002, 1.19209e-07)
 rotation = 1.5708
 shape = SubResource("6")
 
+[node name="DecreasePeopleTimer" type="Timer" parent="."]
+wait_time = 0.15
+
 [connection signal="timeout" from="ReloadTimer" to="." method="_on_ReloadTimer_timeout"]
+[connection signal="timeout" from="DecreasePeopleTimer" to="." method="_on_decrease_people_timer_timeout"]

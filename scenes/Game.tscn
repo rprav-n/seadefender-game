@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c2auhy0cfyl7l" path="res://scenes/Player.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://cws0kb86ydogg" path="res://scenes/PeopleCount.tscn" id="2"]
-[ext_resource type="PackedScene" path="res://scenes/EnemySpawner.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://c7alal82243ji" path="res://scenes/EnemySpawner.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://c5fxyh04j7ydv" path="res://assets/user_interface/oxygen_bar/oxygen_bar_progress.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://upm6fk742lf0" path="res://assets/user_interface/oxygen_bar/oxygen_bar_under.png" id="5"]
 [ext_resource type="Script" path="res://scripts/OxygenBar.cs" id="6"]
@@ -133,7 +133,7 @@ position = Vector2(128, 40)
 shape = SubResource("1")
 
 [node name="Player" parent="." instance=ExtResource("1")]
-position = Vector2(12, 66)
+position = Vector2(128, 66)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3")]
 position = Vector2(0, 0)

@@ -12,6 +12,8 @@ public partial class Player : Area2D
 	private bool canShoot = true;
 
 	private Timer reloadTimer;
+	private Timer decreasePeopleTimer;
+	
 	const int BULLETOFFSET = 7;
 	const float OXYGEN_DECREASE_SPEED = 2.5f;
 	const float OXYGEN_INCREASE_SPEED = 20f;
@@ -32,8 +34,9 @@ public partial class Player : Area2D
 	{
 		
 		BulletScene = GD.Load<PackedScene>("res://scenes/Bullet.tscn");
-		reloadTimer = GetNode<Timer>("ReloadTimer");
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		reloadTimer = GetNode<Timer>("ReloadTimer");
+		decreasePeopleTimer = GetNode<Timer>("DecreasePeopleTimer");
 		
 		global = GetNode<Global>("/root/Global");
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
@@ -56,13 +59,12 @@ public partial class Player : Area2D
 			playerDirection();
 			playerShoot();
 			playerLoseOxygen();	
-		} else if (state == "less_people_refuel") 
+		} else if (state == "oxygen_refuel") 
 		{
 			oxygenRefuel();
 			moveToShoreLine();
 		} else if (state == "full_people_refuel") 
 		{
-			oxygenRefuel();
 			moveToShoreLine();
 		}
 	}
@@ -143,11 +145,13 @@ public partial class Player : Area2D
 	private void _on_fullCrewOxygenRefuel() 
 	{
 		state = "full_people_refuel";
+		decreasePeopleTimer.Start();
 	}
 	
 	private void _on_lessCrewOxygenRefuel() 
 	{
-		state = "less_people_refuel";
+		removeOnePerson();
+		state = "oxygen_refuel";
 	}
 	
 	private void oxygenRefuel() 
@@ -157,7 +161,7 @@ public partial class Player : Area2D
 		if (global.oxygenLevel >= 100) 
 		{
 			state = "default";
-			// moveBelowShoreLine();
+			//TODO moveBelowShoreLine();
 		}
 	}
 	
@@ -175,5 +179,24 @@ public partial class Player : Area2D
 		var newGlobalPosition = GlobalPosition;
 		newGlobalPosition.Y = 100;
 		GlobalPosition = newGlobalPosition;
+	}
+	
+	private void _on_decrease_people_timer_timeout() 
+	{
+		removeOnePerson();
+		if (global.savedPeopleCount <= 0) 
+		{
+			state = "oxygen_refuel";
+			decreasePeopleTimer.Stop();
+		}
+	}
+	
+	private void removeOnePerson() 
+	{
+		if (global.savedPeopleCount > 0) 
+		{
+			global.savedPeopleCount -= 1;
+			gameEvent.EmitSignal("UpdatePeopleCount");	
+		}
 	}
 }

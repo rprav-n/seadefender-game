@@ -28,6 +28,9 @@ public partial class PersonUI : Sprite2D
 	private void _on_updatePeopleCount() {
 		if (global.savedPeopleCount >= orderNumber) {
 			Texture = fullTexture;
+		} else 
+		{
+			Texture = emptyTexture;
 		}
 	}
 
