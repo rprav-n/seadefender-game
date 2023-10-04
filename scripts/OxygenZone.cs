@@ -5,12 +5,12 @@ public partial class OxygenZone : Area2D
 {
 
 	private Global global;
-	private GameEvent gameEvent;
+	private Node gameEvent;
 
 	public override void _Ready()
 	{
 		global = GetNode<Global>("/root/Global");
-		gameEvent = GetNode<GameEvent>("/root/GameEvent");
+		gameEvent = GetNode<Node>("/root/GameEvent");
 	}
 	
 	private void _on_OxygenZone_area_entered(Area2D area) 
@@ -19,10 +19,10 @@ public partial class OxygenZone : Area2D
 		{
 			if (global.savedPeopleCount >= 7) 
 			{
-				gameEvent.EmitSignal("fullCrewOxygenRefuelEventHandler");
+				gameEvent.EmitSignal("FullCrewOxygenRefuel");
 			} else 
 			{
-				gameEvent.EmitSignal("lessCrewOxygenRefuelEventHandler");
+				gameEvent.EmitSignal("LessCrewOxygenRefuel");
 			}
 		}
 	}

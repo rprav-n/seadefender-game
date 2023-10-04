@@ -1,13 +1,13 @@
 using Godot;
 
-public partial class  GameEvent: Node {
+public partial class GameEvent: Node {
 
 	[Signal]
-	public delegate void updatePeopleCountEventHandler();
+	public delegate void UpdatePeopleCountEventHandler();
 	
 	[Signal]
-	public delegate void fullCrewOxygenRefuelEventHandler();
+	public delegate void FullCrewOxygenRefuelEventHandler();
 	
 	[Signal]
-    public delegate void lessCrewOxygenRefuelEventHandler();
+    public delegate void LessCrewOxygenRefuelEventHandler();
 }

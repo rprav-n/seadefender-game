@@ -8,7 +8,7 @@ public partial class Person : Area2D
 
 	private AnimatedSprite2D animatedSprite;
 	private Global global; 
-	private GameEvent gameEvent;
+	private Node gameEvent;
 
 	public override void _Ready() {
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -24,7 +24,7 @@ public partial class Person : Area2D
 	private void _on_Person_area_entered(Area2D area) {
 		if (area.IsInGroup("Player")) {
 			global.savedPeopleCount += 1;
-			gameEvent.EmitSignal("updatePeopleCountEventHandler");
+			gameEvent.EmitSignal("UpdatePeopleCount");
 			this.QueueFree();
 		}
 	}

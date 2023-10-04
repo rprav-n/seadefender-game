@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=3 format=3 uid="uid://dsu4a1804exto"]
 
-[ext_resource path="res://assets/user_interface/people_count/person_empty_ui.png" type="Texture2D" id=1]
-[ext_resource path="res://scripts/PersonUI.cs" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://mtt7s0782vxl" path="res://assets/user_interface/people_count/person_empty_ui.png" id="1"]
+[ext_resource type="Script" path="res://scripts/PersonUI.cs" id="2"]
 
 [node name="PersonUI" type="Sprite2D"]
-texture = ExtResource( 1 )
+texture = ExtResource("1")
 hframes = 2
-script = ExtResource( 2 )
+script = ExtResource("2")

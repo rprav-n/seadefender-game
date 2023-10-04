@@ -1,7 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://7c4rxmyiu00l"]
+[gd_scene load_steps=16 format=3 uid="uid://7c4rxmyiu00l"]
 
 [ext_resource type="PackedScene" uid="uid://c2auhy0cfyl7l" path="res://scenes/Player.tscn" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/PeopleCount.tscn" id="2"]
+[ext_resource type="PackedScene" uid="uid://cws0kb86ydogg" path="res://scenes/PeopleCount.tscn" id="2"]
 [ext_resource type="PackedScene" path="res://scenes/EnemySpawner.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://c5fxyh04j7ydv" path="res://assets/user_interface/oxygen_bar/oxygen_bar_progress.png" id="4"]
 [ext_resource type="Texture2D" uid="uid://upm6fk742lf0" path="res://assets/user_interface/oxygen_bar/oxygen_bar_under.png" id="5"]
@@ -40,8 +40,28 @@ size = Vector2(400, 4)
 subdivide_width = 8
 subdivide_depth = 1
 
+[sub_resource type="QuadMesh" id="QuadMesh_egqtt"]
+size = Vector2(400, 35)
+subdivide_width = 8
+subdivide_depth = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_521fq"]
+size = Vector2(400, 40)
+subdivide_width = 8
+subdivide_depth = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_hndtj"]
+size = Vector2(400, 75)
+subdivide_width = 8
+subdivide_depth = 1
+
+[sub_resource type="QuadMesh" id="QuadMesh_5ol6g"]
+size = Vector2(400, 178)
+subdivide_width = 8
+subdivide_depth = 1
+
 [sub_resource type="RectangleShape2D" id="1"]
-size = Vector2(132, 10)
+size = Vector2(261, 10)
 
 [node name="Game" type="Node"]
 
@@ -68,7 +88,6 @@ texture_progress = ExtResource("4")
 script = ExtResource("6")
 
 [node name="Environment" type="Node2D" parent="."]
-visible = false
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Environment"]
 material = SubResource("3")
@@ -76,16 +95,47 @@ position = Vector2(128, 40)
 scale = Vector2(0.7, 1)
 mesh = SubResource("4")
 
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="Environment"]
+modulate = Color(0.0470588, 0.901961, 0.94902, 1)
+material = SubResource("3")
+position = Vector2(129, 56)
+scale = Vector2(0.7, 1)
+mesh = SubResource("QuadMesh_egqtt")
+
+[node name="MeshInstance2D3" type="MeshInstance2D" parent="Environment"]
+modulate = Color(0, 0.596078, 0.858824, 1)
+material = SubResource("3")
+position = Vector2(128, 68)
+scale = Vector2(0.7, 1)
+mesh = SubResource("QuadMesh_521fq")
+
+[node name="MeshInstance2D4" type="MeshInstance2D" parent="Environment"]
+modulate = Color(0.117647, 0.341176, 0.611765, 1)
+z_index = -1
+material = SubResource("3")
+position = Vector2(128, 110)
+scale = Vector2(0.7, 1)
+mesh = SubResource("QuadMesh_hndtj")
+
+[node name="MeshInstance2D5" type="MeshInstance2D" parent="Environment"]
+modulate = Color(0.12549, 0.207843, 0.384314, 1)
+z_index = -2
+material = SubResource("3")
+position = Vector2(128, 140)
+scale = Vector2(0.7, 1)
+mesh = SubResource("QuadMesh_5ol6g")
+
 [node name="OxygenZone" type="Area2D" parent="."]
 script = ExtResource("7")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="OxygenZone"]
-position = Vector2(128, 43)
+position = Vector2(128, 40)
 shape = SubResource("1")
 
 [node name="Player" parent="." instance=ExtResource("1")]
 position = Vector2(128, 71)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3")]
+position = Vector2(0, 0)
 
 [connection signal="area_entered" from="OxygenZone" to="OxygenZone" method="_on_OxygenZone_area_entered"]

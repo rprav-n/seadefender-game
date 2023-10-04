@@ -15,6 +15,9 @@ public partial class Player : Area2D
 	const int BULLETOFFSET = 7;
 	const float OXYGEN_DECREASE_SPEED = 2.5f;
 	const float OXYGEN_INCREASE_SPEED = 20f;
+	const float OXYGEN_REFUEL_Y_POS = 38;
+	const float OXYGEN_REFUEL_SPEED = 70;
+	
 
 	private Global global;
 	private GameEvent gameEvent;
@@ -23,7 +26,7 @@ public partial class Player : Area2D
 	
 	public override void _Ready()
 	{
-		base._Ready();
+		
 		BulletScene = GD.Load<PackedScene>("res://scenes/Bullet.tscn");
 		reloadTimer = GetNode<Timer>("ReloadTimer");
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -35,9 +38,10 @@ public partial class Player : Area2D
 	}
 	
 	private void connectSignals() 
-	{
-		gameEvent.Connect("fullCrewOxygenRefuelEventHandler", new Callable(this, "_on_fullCrewOxygenRefuel"));
-		gameEvent.Connect("lessCrewOxygenRefuelEventHandler", new Callable(this, "_on_lessCrewOxygenRefuel"));
+	{	
+		gameEvent.Connect("FullCrewOxygenRefuel", new Callable(this, "_on_fullCrewOxygenRefuel"));
+		gameEvent.Connect("LessCrewOxygenRefuel", new Callable(this, "_on_lessCrewOxygenRefuel"));
+		
 	}
 
 	public override void _Process(double delta)
@@ -51,9 +55,11 @@ public partial class Player : Area2D
 		} else if (state == "less_people_refuel") 
 		{
 			oxygenRefuel();
+			moveToShoreLine();
 		} else if (state == "full_people_refuel") 
 		{
 			oxygenRefuel();
+			moveToShoreLine();
 		}
 	}
 
@@ -137,7 +143,24 @@ public partial class Player : Area2D
 		
 		if (global.oxygenLevel >= 100) 
 		{
-			state = "default";	
+			state = "default";
+			// moveBelowShoreLine();
 		}
+	}
+	
+	private void moveToShoreLine() 
+	{
+		var moveSpeed = OXYGEN_REFUEL_SPEED * GetProcessDeltaTime();
+		var newGlobalPosition = GlobalPosition;
+		newGlobalPosition.Y = (float)Mathf.MoveToward(newGlobalPosition.Y, OXYGEN_REFUEL_Y_POS, moveSpeed);
+		GlobalPosition = newGlobalPosition;
+	}
+	
+	private void moveBelowShoreLine() 
+	{
+		// var moveSpeed = OXYGEN_REFUEL_SPEED * GetProcessDeltaTime();
+		var newGlobalPosition = GlobalPosition;
+		newGlobalPosition.Y = 100;
+		GlobalPosition = newGlobalPosition;
 	}
 }
