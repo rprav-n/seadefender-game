@@ -133,7 +133,7 @@ position = Vector2(128, 40)
 shape = SubResource("1")
 
 [node name="Player" parent="." instance=ExtResource("1")]
-position = Vector2(128, 71)
+position = Vector2(12, 66)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3")]
 position = Vector2(0, 0)

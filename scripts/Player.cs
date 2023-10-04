@@ -15,10 +15,14 @@ public partial class Player : Area2D
 	const int BULLETOFFSET = 7;
 	const float OXYGEN_DECREASE_SPEED = 2.5f;
 	const float OXYGEN_INCREASE_SPEED = 20f;
-	const float OXYGEN_REFUEL_Y_POS = 38;
+	const int OXYGEN_REFUEL_Y_POS = 38;
 	const float OXYGEN_REFUEL_SPEED = 70;
 	
-
+	const int MIN_X_POS = 12;
+	const int MAX_X_POS = 246;
+	const int MIN_Y_POS = OXYGEN_REFUEL_Y_POS;
+	const int MAX_Y_POS = 205;
+	
 	private Global global;
 	private GameEvent gameEvent;
 	
@@ -113,6 +117,15 @@ public partial class Player : Area2D
 	private void playerMovement() 
 	{
 		this.GlobalPosition += velocity * SPEED * (float)GetPhysicsProcessDeltaTime();
+		clampPlayerPosition();
+	}
+	
+	private void clampPlayerPosition() 
+	{
+		var newGlobalPosition = GlobalPosition;
+		newGlobalPosition.X = Mathf.Clamp(newGlobalPosition.X, MIN_X_POS, MAX_X_POS);
+		newGlobalPosition.Y = Mathf.Clamp(newGlobalPosition.Y, MIN_Y_POS, MAX_Y_POS);
+		this.GlobalPosition = newGlobalPosition;
 	}
 
 	private void playerLoseOxygen() 
