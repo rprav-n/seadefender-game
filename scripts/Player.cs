@@ -120,6 +120,7 @@ public partial class Player : Area2D
 	{
 		this.GlobalPosition += velocity * SPEED * (float)GetPhysicsProcessDeltaTime();
 		clampPlayerPosition();
+		gameEvent.EmitSignal("CameraFollowPlayer", this.GlobalPosition.Y);
 	}
 	
 	private void clampPlayerPosition() 

@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://7c4rxmyiu00l"]
+[gd_scene load_steps=18 format=3 uid="uid://7c4rxmyiu00l"]
 
 [ext_resource type="PackedScene" uid="uid://c2auhy0cfyl7l" path="res://scenes/Player.tscn" id="1"]
+[ext_resource type="Script" path="res://scenes/Camera.cs" id="1_0sd2i"]
 [ext_resource type="PackedScene" uid="uid://cws0kb86ydogg" path="res://scenes/PeopleCount.tscn" id="2"]
 [ext_resource type="PackedScene" uid="uid://c7alal82243ji" path="res://scenes/EnemySpawner.tscn" id="3"]
 [ext_resource type="Texture2D" uid="uid://c5fxyh04j7ydv" path="res://assets/user_interface/oxygen_bar/oxygen_bar_progress.png" id="4"]
@@ -65,6 +66,10 @@ subdivide_depth = 1
 size = Vector2(261, 10)
 
 [node name="Game" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(128, 70)
+script = ExtResource("1_0sd2i")
 
 [node name="UserInterface" type="CanvasLayer" parent="."]
 
