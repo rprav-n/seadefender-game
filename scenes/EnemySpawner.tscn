@@ -8,30 +8,30 @@ script = ExtResource( 1 )
 
 [node name="Left" type="Node2D" parent="."]
 
-[node name="1" type="Position2D" parent="Left"]
+[node name="1" type="Marker2D" parent="Left"]
 position = Vector2( -32, 77 )
 
-[node name="2" type="Position2D" parent="Left"]
+[node name="2" type="Marker2D" parent="Left"]
 position = Vector2( -32, 109 )
 
-[node name="3" type="Position2D" parent="Left"]
+[node name="3" type="Marker2D" parent="Left"]
 position = Vector2( -32, 141 )
 
-[node name="4" type="Position2D" parent="Left"]
+[node name="4" type="Marker2D" parent="Left"]
 position = Vector2( -32, 173 )
 
 [node name="Right" type="Node2D" parent="."]
 
-[node name="1" type="Position2D" parent="Right"]
+[node name="1" type="Marker2D" parent="Right"]
 position = Vector2( 288, 77 )
 
-[node name="2" type="Position2D" parent="Right"]
+[node name="2" type="Marker2D" parent="Right"]
 position = Vector2( 288, 109 )
 
-[node name="3" type="Position2D" parent="Right"]
+[node name="3" type="Marker2D" parent="Right"]
 position = Vector2( 288, 141 )
 
-[node name="4" type="Position2D" parent="Right"]
+[node name="4" type="Marker2D" parent="Right"]
 position = Vector2( 288, 173 )
 
 [node name="SpawnEnemyTimer" type="Timer" parent="."]

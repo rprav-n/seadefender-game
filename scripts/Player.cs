@@ -1,14 +1,14 @@
 using Godot;
 using System;
 
-public class Player : Area2D
+public partial class Player : Area2D
 {
 
 	private Vector2 velocity;
 	private Vector2 SPEED = new Vector2(125, 90);
 	
 	private PackedScene BulletScene;
-	private AnimatedSprite animatedSprite;
+	private AnimatedSprite2D animatedSprite;
 	private bool canShoot = true;
 
 	private Timer reloadTimer;
@@ -26,7 +26,7 @@ public class Player : Area2D
 		base._Ready();
 		BulletScene = GD.Load<PackedScene>("res://scenes/Bullet.tscn");
 		reloadTimer = GetNode<Timer>("ReloadTimer");
-		animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		
 		global = GetNode<Global>("/root/Global");
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
@@ -36,11 +36,11 @@ public class Player : Area2D
 	
 	private void connectSignals() 
 	{
-		gameEvent.Connect("fullCrewOxygenRefuel", this, "_on_fullCrewOxygenRefuel");
-		gameEvent.Connect("lessCrewOxygenRefuel", this, "_on_lessCrewOxygenRefuel");
+		gameEvent.Connect("fullCrewOxygenRefuelEventHandler", new Callable(this, "_on_fullCrewOxygenRefuel"));
+		gameEvent.Connect("lessCrewOxygenRefuelEventHandler", new Callable(this, "_on_lessCrewOxygenRefuel"));
 	}
 
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		if (state == "default") 
 		{
@@ -57,7 +57,7 @@ public class Player : Area2D
 		}
 	}
 
-	public override void _PhysicsProcess(float delta)
+	public override void _PhysicsProcess(double delta)
 	{
 		if (state == "default") 
 		{
@@ -67,17 +67,17 @@ public class Player : Area2D
 
 	private void playerInput() 
 	{
-		velocity.x = Input.GetAxis("move_left", "move_right");
-		velocity.y = Input.GetAxis("move_up", "move_down");
+		velocity.X = Input.GetAxis("move_left", "move_right");
+		velocity.Y = Input.GetAxis("move_up", "move_down");
 
 		velocity = velocity.Normalized();
 	}
 
 	private void playerDirection()
 	{
-		if (velocity.x != 0)
+		if (velocity.X != 0)
 		{
-			this.animatedSprite.FlipH = velocity.x == -1;
+			this.animatedSprite.FlipH = velocity.X == -1;
 		}
 	}
 
@@ -85,13 +85,13 @@ public class Player : Area2D
 	{
 		if (Input.IsActionPressed("shoot") && canShoot)
 		{
-			var bulletInstance = BulletScene.Instance<Bullet>();
+			var bulletInstance = BulletScene.Instantiate<Bullet>();
 			GetTree().CurrentScene.AddChild(bulletInstance);
 
 
 			if (animatedSprite.FlipH)
 			{
-				bulletInstance.direction.x = -1;
+				bulletInstance.direction.X = -1;
 				bulletInstance.ChangeFlipHTo(true);
 				bulletInstance.GlobalPosition = this.GlobalPosition - new Vector2(BULLETOFFSET, 0);
 			} else
@@ -106,13 +106,13 @@ public class Player : Area2D
 
 	private void playerMovement() 
 	{
-		this.GlobalPosition += velocity * SPEED * GetPhysicsProcessDeltaTime();
+		this.GlobalPosition += velocity * SPEED * (float)GetPhysicsProcessDeltaTime();
 	}
 
 	private void playerLoseOxygen() 
 	{
 		var oxygenDecreaseDelta = OXYGEN_DECREASE_SPEED * GetProcessDeltaTime();
-		global.oxygenLevel = Mathf.MoveToward(global.oxygenLevel, 0, oxygenDecreaseDelta);
+		global.oxygenLevel = (float)Mathf.MoveToward(global.oxygenLevel, 0, oxygenDecreaseDelta);
 		
 	}
 
@@ -133,7 +133,7 @@ public class Player : Area2D
 	
 	private void oxygenRefuel() 
 	{
-		global.oxygenLevel += OXYGEN_INCREASE_SPEED * GetProcessDeltaTime();
+		global.oxygenLevel += (float)(OXYGEN_INCREASE_SPEED * GetProcessDeltaTime());
 		
 		if (global.oxygenLevel >= 100) 
 		{

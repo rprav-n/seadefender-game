@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/shark_death.ogg-408c0e526d1e058ceef09a532aa0a24e.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://vqhuev5177g7"
+path="res://.godot/imported/shark_death.ogg-408c0e526d1e058ceef09a532aa0a24e.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/enemies/shark/shark_death.ogg"
-dest_files=[ "res://.import/shark_death.ogg-408c0e526d1e058ceef09a532aa0a24e.oggstr" ]
+dest_files=["res://.godot/imported/shark_death.ogg-408c0e526d1e058ceef09a532aa0a24e.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections;
 
-public class EnemySpawner : Node2D
+public partial class EnemySpawner : Node2D
 {
 
     Random r = new Random();
@@ -44,9 +44,9 @@ public class EnemySpawner : Node2D
     {
         var randomNumber = r.Next(0, 2);
         var selectedSideNode = randomNumber == 0 ? left : right;
-        var selectedSpawnPosition = selectedSideNode.GetNode<Position2D>(positionPoint.ToString());
+        var selectedSpawnPosition = selectedSideNode.GetNode<Marker2D>(positionPoint.ToString());
         
-        var sharkInstance = SharkScene.Instance<Shark>();
+        var sharkInstance = SharkScene.Instantiate<Shark>();
         sharkInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
         
         GetTree().CurrentScene.AddChild(sharkInstance);
@@ -63,9 +63,9 @@ public class EnemySpawner : Node2D
 
         var randomNumber = r.Next(0, 2);
         var selectedSideNode = randomNumber == 0 ? left : right;
-        var selectedSpawnPosition = selectedSideNode.GetNode<Position2D>(positionPoint.ToString());
+        var selectedSpawnPosition = selectedSideNode.GetNode<Marker2D>(positionPoint.ToString());
 
-        var personInstance = PersonScene.Instance<Person>();
+        var personInstance = PersonScene.Instantiate<Person>();
         personInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
 
         GetTree().CurrentScene.AddChild(personInstance);

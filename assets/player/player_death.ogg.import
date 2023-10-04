@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/player_death.ogg-73b1dc4697594f715a572b91225d793b.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://d4ecjsam7lnpr"
+path="res://.godot/imported/player_death.ogg-73b1dc4697594f715a572b91225d793b.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/player/player_death.ogg"
-dest_files=[ "res://.import/player_death.ogg-73b1dc4697594f715a572b91225d793b.oggstr" ]
+dest_files=["res://.godot/imported/player_death.ogg-73b1dc4697594f715a572b91225d793b.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

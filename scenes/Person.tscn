@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/person/person_swimming.png" type="Texture" id=1]
+[ext_resource path="res://assets/person/person_swimming.png" type="Texture2D" id=1]
 [ext_resource path="res://scripts/Person.cs" type="Script" id=2]
 
 [sub_resource type="AtlasTexture" id=1]
@@ -20,16 +20,16 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 6, 3.5 )
+size = Vector2( 6, 3.5 )
 
 [node name="Person" type="Area2D"]
 script = ExtResource( 2 )
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 frames = SubResource( 3 )
 playing = true
 
-[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 position = Vector2( 0, 0.5 )
 scale = Vector2( 0.6, 0.35 )
 
@@ -38,4 +38,4 @@ position = Vector2( 0, 0.5 )
 shape = SubResource( 4 )
 
 [connection signal="area_entered" from="." to="." method="_on_Person_area_entered"]
-[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

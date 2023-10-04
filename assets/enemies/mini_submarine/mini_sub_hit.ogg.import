@@ -1,15 +1,19 @@
 [remap]
 
-importer="ogg_vorbis"
-type="AudioStreamOGGVorbis"
-path="res://.import/mini_sub_hit.ogg-6dee3ede35b8a214d6a771906ab99510.oggstr"
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://bcbwelyrujkbt"
+path="res://.godot/imported/mini_sub_hit.ogg-6dee3ede35b8a214d6a771906ab99510.oggvorbisstr"
 
 [deps]
 
 source_file="res://assets/enemies/mini_submarine/mini_sub_hit.ogg"
-dest_files=[ "res://.import/mini_sub_hit.ogg-6dee3ede35b8a214d6a771906ab99510.oggstr" ]
+dest_files=["res://.godot/imported/mini_sub_hit.ogg-6dee3ede35b8a214d6a771906ab99510.oggvorbisstr"]
 
 [params]
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

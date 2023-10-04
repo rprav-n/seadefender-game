@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class OxygenBar : TextureProgress
+public partial class OxygenBar : TextureProgressBar
 {
 	
 	private Global global;
@@ -11,7 +11,7 @@ public class OxygenBar : TextureProgress
 		global = GetNode<Global>("/root/Global");
 	}
 
-	public override void _Process(float delta)
+	public override void _Process(double delta)
 	{
 		Value = global.oxygenLevel;
 	}

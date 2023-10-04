@@ -1,19 +1,19 @@
 using Godot;
 using System;
 
-public class Bullet : Area2D
+public partial class Bullet : Area2D
 {
     public Vector2 direction = new Vector2(1, 0);
     private const int SPEED = 300;
 
     Random r = new Random();
 
-    private AnimatedSprite animatedSprite;
+    private AnimatedSprite2D animatedSprite;
 
     public override void _Ready()
     {
         base._Ready();
-        animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
+        animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
         animatedSprite.Frame = 0;
         animatedSprite.Play();
 
@@ -21,9 +21,9 @@ public class Bullet : Area2D
         direction = direction.Rotated(this.Rotation) * (animatedSprite.FlipH ? -1 : 1);
     }
 
-    public override void _PhysicsProcess(float delta)
+    public override void _PhysicsProcess(double delta)
     {
-        this.GlobalPosition += direction * SPEED * delta;
+        this.GlobalPosition += direction * SPEED * (float)delta;
     }
 
     private void _on_VisibilityNotifier2D_screen_exited()

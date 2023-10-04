@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class OxygenZone : Area2D
+public partial class OxygenZone : Area2D
 {
 
 	private Global global;
@@ -12,11 +12,6 @@ public class OxygenZone : Area2D
 		global = GetNode<Global>("/root/Global");
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
 	}
-
-	public override void _Process(float delta)
-	{
-		
-	}
 	
 	private void _on_OxygenZone_area_entered(Area2D area) 
 	{
@@ -24,10 +19,10 @@ public class OxygenZone : Area2D
 		{
 			if (global.savedPeopleCount >= 7) 
 			{
-				gameEvent.EmitSignal("fullCrewOxygenRefuel");
+				gameEvent.EmitSignal("fullCrewOxygenRefuelEventHandler");
 			} else 
 			{
-				gameEvent.EmitSignal("lessCrewOxygenRefuel");
+				gameEvent.EmitSignal("lessCrewOxygenRefuelEventHandler");
 			}
 		}
 	}
