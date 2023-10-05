@@ -19,6 +19,6 @@ public partial class PointsDisplay : Label
 	
 	private void _on_updatePoints() 
 	{
-		this.Text = global.current_points.ToString();
+		this.Text = global.currentPoints.ToString();
 	}
 }

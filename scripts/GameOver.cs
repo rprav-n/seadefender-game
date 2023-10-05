@@ -22,17 +22,18 @@ public partial class GameOver : Control
 		this.Visible = false;
 	}
 
-    public override void _Process(double delta)
-    {
-        if (Input.IsActionJustPressed("shoot") && this.Visible) 
+	public override void _Process(double delta)
+	{
+		if (Input.IsActionJustPressed("shoot") && this.Visible) 
 		{
+			global.Reset();
 			GetTree().ReloadCurrentScene();
 		}
-    }
+	}
 
-    private void _on_activateGameOver() 
+	private void _on_activateGameOver() 
 	{
-		currentScoreLabel.Text = "Score " + global.current_points.ToString();
+		currentScoreLabel.Text = "Score " + global.currentPoints.ToString();
 		gameOverDelayTimer.Start();
 	}
 	

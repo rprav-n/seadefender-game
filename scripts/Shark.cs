@@ -48,7 +48,7 @@ public partial class Shark : Area2D
 			bullet.QueueFree();
 			this.QueueFree();
 			
-			global.current_points += POINT_VALUE;
+			global.currentPoints += POINT_VALUE;
 			
 			gameEvent.EmitSignal("UpdatePoints");
 		}

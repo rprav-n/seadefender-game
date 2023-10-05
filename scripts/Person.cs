@@ -34,7 +34,7 @@ public partial class Person : Area2D
 	private void _on_Person_area_entered(Area2D area) {
 		if (area.IsInGroup("Player")) {
 			global.savedPeopleCount += 1;
-			global.current_points += POINT_VALUE;
+			global.currentPoints += POINT_VALUE;
 			gameEvent.EmitSignal("UpdatePeopleCount");
 			gameEvent.EmitSignal("UpdatePoints");
 			this.QueueFree();
