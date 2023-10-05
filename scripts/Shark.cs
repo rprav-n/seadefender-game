@@ -5,6 +5,8 @@ public partial class Shark : Area2D
 {
 	const int SPEED = 50;
 	const float MOVEMENT_FREQUENCY = 0.15f;
+	
+	
 
 	private Vector2 direction = new Vector2(1, 0);
 	private AnimatedSprite2D animatedSprite;
@@ -31,7 +33,15 @@ public partial class Shark : Area2D
 		this.GlobalPosition += direction * SPEED * (float)delta;
 	}
 
-	private void _on_Shark_area_entered(Area2D area)
+    public override void _Process(double delta)
+    {
+        if (GlobalPosition.X >= global.SCREEN_BOUND_MAX_X || GlobalPosition.X <= global.SCREEN_BOUND_MIN_X) 
+		{
+			this.QueueFree();
+		}
+    }
+
+    private void _on_Shark_area_entered(Area2D area)
 	{
 		if (area is Bullet bullet)
 		{

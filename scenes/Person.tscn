@@ -37,13 +37,8 @@ autoplay = "default"
 frame = 1
 frame_progress = 0.709738
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2(0, 0.5)
-scale = Vector2(0.6, 0.35)
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
 shape = SubResource("4")
 
 [connection signal="area_entered" from="." to="." method="_on_Person_area_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
