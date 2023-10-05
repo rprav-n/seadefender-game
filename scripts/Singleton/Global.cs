@@ -14,6 +14,6 @@ public partial class Global: Node {
 		savedPeopleCount = 0;
 		oxygenLevel = 100f;
 		currentPoints = 0;
-		highScore = currentPoints;
+
 	}
 }
