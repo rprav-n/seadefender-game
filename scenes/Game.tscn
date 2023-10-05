@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://7c4rxmyiu00l"]
+[gd_scene load_steps=21 format=3 uid="uid://7c4rxmyiu00l"]
 
 [ext_resource type="PackedScene" uid="uid://c2auhy0cfyl7l" path="res://scenes/Player.tscn" id="1"]
 [ext_resource type="Script" path="res://scenes/Camera.cs" id="1_0sd2i"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://scripts/OxygenZone.cs" id="7"]
 [ext_resource type="FontFile" uid="uid://bvi68d7xnr3gw" path="res://assets/user_interface/fonts/font_2.ttf" id="7_mkcms"]
 [ext_resource type="Script" path="res://scripts/PointsDisplay.cs" id="8_w7uo3"]
+[ext_resource type="PackedScene" uid="uid://cptgki4prcagf" path="res://scenes/GameOver.tscn" id="9_rgo6o"]
 
 [sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
@@ -131,6 +132,8 @@ text = "100"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("8_w7uo3")
+
+[node name="GameOver" parent="UserInterface" instance=ExtResource("9_rgo6o")]
 
 [node name="Environment" type="Node2D" parent="."]
 
