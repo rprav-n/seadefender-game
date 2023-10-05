@@ -48,7 +48,7 @@ public partial class Player : Area2D
 	{	
 		gameEvent.Connect("FullCrewOxygenRefuel", new Callable(this, "_on_fullCrewOxygenRefuel"));
 		gameEvent.Connect("LessCrewOxygenRefuel", new Callable(this, "_on_lessCrewOxygenRefuel"));
-		
+		gameEvent.Connect("GameOver", new Callable(this, "_on_GameOver"));
 	}
 
 	public override void _Process(double delta)
@@ -59,6 +59,7 @@ public partial class Player : Area2D
 			playerDirection();
 			playerShoot();
 			playerLoseOxygen();	
+			deathWhenOxygenReachesZero();
 		} else if (state == "oxygen_refuel") 
 		{
 			oxygenRefuel();
@@ -89,7 +90,7 @@ public partial class Player : Area2D
 	{
 		if (velocity.X != 0)
 		{
-			this.animatedSprite.FlipH = velocity.X == -1;
+			this.animatedSprite.FlipH = velocity.X < 0;
 		}
 	}
 
@@ -135,8 +136,24 @@ public partial class Player : Area2D
 	{
 		var oxygenDecreaseDelta = OXYGEN_DECREASE_SPEED * GetProcessDeltaTime();
 		global.oxygenLevel = (float)Mathf.MoveToward(global.oxygenLevel, 0, oxygenDecreaseDelta);
-		
 	}
+
+	private void deathWhenOxygenReachesZero() 
+	{
+		if (global.oxygenLevel <= 0) 
+		{
+			gameEvent.EmitSignal("GameOver");
+		}
+	}
+	
+	private void deathWhenRefuelingWhileFull() 
+	{
+		if (global.oxygenLevel > 80) 
+		{
+			gameEvent.EmitSignal("GameOver");
+		}
+	}
+	
 
 	private void _on_ReloadTimer_timeout()
 	{
@@ -147,12 +164,14 @@ public partial class Player : Area2D
 	{
 		state = "full_people_refuel";
 		decreasePeopleTimer.Start();
+		deathWhenRefuelingWhileFull();
 	}
 	
 	private void _on_lessCrewOxygenRefuel() 
 	{
 		removeOnePerson();
 		state = "oxygen_refuel";
+		deathWhenRefuelingWhileFull();
 	}
 	
 	private void oxygenRefuel() 
@@ -199,5 +218,10 @@ public partial class Player : Area2D
 			global.savedPeopleCount -= 1;
 			gameEvent.EmitSignal("UpdatePeopleCount");	
 		}
+	}
+
+	private void _on_GameOver() 
+	{
+		this.QueueFree();
 	}
 }

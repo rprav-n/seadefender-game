@@ -33,15 +33,15 @@ public partial class Shark : Area2D
 		this.GlobalPosition += direction * SPEED * (float)delta;
 	}
 
-    public override void _Process(double delta)
-    {
-        if (GlobalPosition.X >= global.SCREEN_BOUND_MAX_X || GlobalPosition.X <= global.SCREEN_BOUND_MIN_X) 
+	public override void _Process(double delta)
+	{
+		if (GlobalPosition.X >= global.SCREEN_BOUND_MAX_X || GlobalPosition.X <= global.SCREEN_BOUND_MIN_X) 
 		{
 			this.QueueFree();
 		}
-    }
+	}
 
-    private void _on_Shark_area_entered(Area2D area)
+	private void _on_Shark_area_entered(Area2D area)
 	{
 		if (area is Bullet bullet)
 		{
@@ -51,6 +51,11 @@ public partial class Shark : Area2D
 			global.current_points += POINT_VALUE;
 			
 			gameEvent.EmitSignal("UpdatePoints");
+		}
+		
+		if (area.IsInGroup("Player")) 
+		{
+			gameEvent.EmitSignal("GameOver");
 		}
 	}
 

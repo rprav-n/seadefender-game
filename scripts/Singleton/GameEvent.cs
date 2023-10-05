@@ -16,4 +16,7 @@ public partial class GameEvent: Node {
 	
 	[Signal]
 	public delegate void UpdatePointsEventHandler();
+	
+	[Signal]
+	public delegate void GameOverEventHandler();
 }
