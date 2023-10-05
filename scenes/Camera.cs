@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Net;
 
 public partial class Camera : Camera2D
 {

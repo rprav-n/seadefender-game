@@ -12,5 +12,8 @@ public partial class GameEvent: Node {
 	public delegate void LessCrewOxygenRefuelEventHandler();
 	
 	[Signal]
-    public delegate void CameraFollowPlayerEventHandler(float yPos);
+	public delegate void CameraFollowPlayerEventHandler(float yPos);
+	
+	[Signal]
+	public delegate void UpdatePointsEventHandler();
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://7c4rxmyiu00l"]
+[gd_scene load_steps=20 format=3 uid="uid://7c4rxmyiu00l"]
 
 [ext_resource type="PackedScene" uid="uid://c2auhy0cfyl7l" path="res://scenes/Player.tscn" id="1"]
 [ext_resource type="Script" path="res://scenes/Camera.cs" id="1_0sd2i"]
@@ -9,6 +9,8 @@
 [ext_resource type="FontFile" uid="uid://cge1ap7cqxt8o" path="res://assets/user_interface/fonts/font_1.ttf" id="5_a6ibn"]
 [ext_resource type="Script" path="res://scripts/OxygenBar.cs" id="6"]
 [ext_resource type="Script" path="res://scripts/OxygenZone.cs" id="7"]
+[ext_resource type="FontFile" uid="uid://bvi68d7xnr3gw" path="res://assets/user_interface/fonts/font_2.ttf" id="7_mkcms"]
+[ext_resource type="Script" path="res://scripts/PointsDisplay.cs" id="8_w7uo3"]
 
 [sub_resource type="Shader" id="2"]
 code = "shader_type canvas_item;
@@ -115,6 +117,20 @@ theme_override_font_sizes/font_size = 8
 text = "Oxygen"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="PointsDisplay" type="Label" parent="UserInterface"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 20.0
+grow_horizontal = 2
+theme_override_colors/font_outline_color = Color(0.12549, 0.0823529, 0.2, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("7_mkcms")
+theme_override_font_sizes/font_size = 10
+text = "100"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("8_w7uo3")
 
 [node name="Environment" type="Node2D" parent="."]
 

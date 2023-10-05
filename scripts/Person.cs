@@ -9,6 +9,8 @@ public partial class Person : Area2D
 	private AnimatedSprite2D animatedSprite;
 	private Global global; 
 	private Node gameEvent;
+	
+	const int POINT_VALUE = 30;
 
 	public override void _Ready() {
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -24,7 +26,9 @@ public partial class Person : Area2D
 	private void _on_Person_area_entered(Area2D area) {
 		if (area.IsInGroup("Player")) {
 			global.savedPeopleCount += 1;
+			global.current_points += POINT_VALUE;
 			gameEvent.EmitSignal("UpdatePeopleCount");
+			gameEvent.EmitSignal("UpdatePoints");
 			this.QueueFree();
 		}
 	}
