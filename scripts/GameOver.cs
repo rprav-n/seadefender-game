@@ -7,6 +7,7 @@ public partial class GameOver : Control
 	private GameEvent gameEvent;
 	
 	private Label currentScoreLabel;
+	private Timer gameOverDelayTimer;
 		
 	public override void _Ready()
 	{
@@ -14,16 +15,30 @@ public partial class GameOver : Control
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
 		
 		currentScoreLabel = GetNode<Label>("CurrentScoreLabel");
+		gameOverDelayTimer = GetNode<Timer>("GameOverDelayTimer");
 		
 		gameEvent.Connect("GameOver", new Callable(this, "_on_activateGameOver"));
 		
 		this.Visible = false;
 	}
-	
-	private void _on_activateGameOver() 
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("shoot") && this.Visible) 
+		{
+			GetTree().ReloadCurrentScene();
+		}
+    }
+
+    private void _on_activateGameOver() 
 	{
 		currentScoreLabel.Text = "Score " + global.current_points.ToString();
-		this.Visible = true;
+		gameOverDelayTimer.Start();
 	}
 	
+	private void _on_game_over_delay_timer_timeout() 
+	{
+		this.Visible = true;
+	}
+		
 }
