@@ -7,6 +7,7 @@ public partial class OxygenBar : Node2D
 	
 	private Global global;
 	private TextureProgressBar textureProgress;
+	private Timer flashTimer;
 	
 	Random r = new Random();
 	
@@ -16,6 +17,7 @@ public partial class OxygenBar : Node2D
 	{
 		global = GetNode<Global>("/root/Global");
 		textureProgress = GetNode<TextureProgressBar>("TextureProgress");
+		flashTimer = GetNode<Timer>("FlashTimer");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -70,5 +72,12 @@ public partial class OxygenBar : Node2D
 	{
 		this.Scale = new Vector2(scaleVal, scaleVal);
 		this.RotationDegrees = r.Next(-rotVal, rotVal);
+		this.Modulate = new Color(12, 12, 12);
+		flashTimer.Start();
+	}
+	
+	private void _on_flash_timer_timeout() 
+	{
+		this.Modulate = new Color(1, 1, 1);
 	}
 }
