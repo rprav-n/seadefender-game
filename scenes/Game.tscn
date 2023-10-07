@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://7c4rxmyiu00l"]
+[gd_scene load_steps=19 format=3 uid="uid://7c4rxmyiu00l"]
 
 [ext_resource type="PackedScene" uid="uid://c2auhy0cfyl7l" path="res://scenes/Player.tscn" id="1"]
 [ext_resource type="Script" path="res://scripts/Camera.cs" id="1_28ix3"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://c7alal82243ji" path="res://scenes/EnemySpawner.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://c7ptp0h22je2l" path="res://scenes/OxygenBar.tscn" id="3_e73t0"]
 [ext_resource type="Script" path="res://scripts/OxygenZone.cs" id="7"]
+[ext_resource type="Texture2D" uid="uid://kdwktd65rxae" path="res://assets/scenes/environment/sand_bottom.png" id="7_guutn"]
 [ext_resource type="FontFile" uid="uid://bvi68d7xnr3gw" path="res://assets/user_interface/fonts/font_2.ttf" id="7_mkcms"]
 [ext_resource type="Script" path="res://scripts/PointsDisplay.cs" id="8_w7uo3"]
 [ext_resource type="PackedScene" uid="uid://cptgki4prcagf" path="res://scenes/GameOver.tscn" id="9_rgo6o"]
@@ -133,6 +134,11 @@ material = SubResource("3")
 position = Vector2(128, 140)
 scale = Vector2(0.7, 1)
 mesh = SubResource("QuadMesh_5ol6g")
+
+[node name="Ground" type="Sprite2D" parent="Environment"]
+z_index = 2
+position = Vector2(129, 213)
+texture = ExtResource("7_guutn")
 
 [node name="OxygenZone" type="Area2D" parent="."]
 script = ExtResource("7")
