@@ -38,7 +38,9 @@ public partial class Player : Area2D
 	
 	private States state = States.Default;
 	
-	private AudioStream shootSound ;
+	private AudioStream shootSound;
+	private AudioStream deathSound;
+	private AudioStream oxygenFullSound;
 	
 	public override void _Ready()
 	{
@@ -53,6 +55,9 @@ public partial class Player : Area2D
 		soundManager = GetNode<SoundManager>("/root/SoundManager");
 		
 		shootSound = GD.Load<AudioStream>("res://assets/player/player_bullet/player_shoot.ogg");
+		deathSound = GD.Load<AudioStream>("res://assets/player/player_death.ogg");
+		oxygenFullSound = GD.Load<AudioStream>("res://assets/user_interface/oxygen_bar/full_oxygen_alert.ogg");
+		
 		connectSignals();
 	}
 	
@@ -199,6 +204,7 @@ public partial class Player : Area2D
 			state = States.Default;
 			animatedSprite.Play("default");
 			gameEvent.EmitSignal("PauseEnemies", false);
+			soundManager.playSound(oxygenFullSound);
 			//TODO moveBelowShoreLine();
 		}
 	}
@@ -241,6 +247,7 @@ public partial class Player : Area2D
 	private void _on_GameOver() 
 	{
 		gameEvent.EmitSignal("PauseEnemies", true);
+		soundManager.playSound(deathSound);
 		this.QueueFree();
 	}
 }

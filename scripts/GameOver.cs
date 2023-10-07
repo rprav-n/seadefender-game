@@ -9,6 +9,9 @@ public partial class GameOver : Control
 	private Label currentScoreLabel;
 	private Label highScoreLabel;
 	private Timer gameOverDelayTimer;
+	
+	private SoundManager soundManager;
+	private AudioStream gameOverSound;
 		
 	public override void _Ready()
 	{
@@ -20,6 +23,10 @@ public partial class GameOver : Control
 		gameOverDelayTimer = GetNode<Timer>("GameOverDelayTimer");
 		
 		gameEvent.Connect("GameOver", new Callable(this, "_on_activateGameOver"));
+		
+		soundManager = GetNode<SoundManager>("/root/SoundManager");
+		
+		gameOverSound = GD.Load<AudioStream>("res://assets/player/game_over.ogg");
 		
 		this.Visible = false;
 	}
@@ -47,6 +54,7 @@ public partial class GameOver : Control
 	private void _on_game_over_delay_timer_timeout() 
 	{
 		this.Visible = true;
+		soundManager.playSound(gameOverSound);
 	}
 		
 }

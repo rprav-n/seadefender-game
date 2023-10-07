@@ -1,42 +1,48 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://b1upvew3awjo7"]
 
-[ext_resource path="res://assets/player/player_bullet/player_bullet.png" type="Texture2D" id=1]
-[ext_resource path="res://scripts/Bullet.cs" type="Script" id=2]
+[ext_resource type="Texture2D" uid="uid://cqjk3oe54ejlk" path="res://assets/player/player_bullet/player_bullet.png" id="1"]
+[ext_resource type="Script" path="res://scripts/Bullet.cs" id="2"]
 
-[sub_resource type="AtlasTexture" id=1]
-atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 18, 13 )
+[sub_resource type="AtlasTexture" id="1"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 18, 13)
 
-[sub_resource type="AtlasTexture" id=2]
-atlas = ExtResource( 1 )
-region = Rect2( 18, 0, 18, 13 )
+[sub_resource type="AtlasTexture" id="2"]
+atlas = ExtResource("1")
+region = Rect2(18, 0, 18, 13)
 
-[sub_resource type="SpriteFrames" id=3]
-animations = [ {
-"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+[sub_resource type="SpriteFrames" id="3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("1")
+}, {
+"duration": 1.0,
+"texture": SubResource("2")
+}],
 "loop": false,
-"name": "default",
+"name": &"default",
 "speed": 20.0
-} ]
+}]
 
-[sub_resource type="CapsuleShape2D" id=4]
+[sub_resource type="CapsuleShape2D" id="4"]
 radius = 3.0
 height = 6.0
 
-[node name="Bullet" type="Area2D"]
+[node name="Bullet" type="Area2D" groups=["Bullet"]]
 z_index = 1
-script = ExtResource( 2 )
+script = ExtResource("2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-frames = SubResource( 3 )
-offset = Vector2( -0.5, 0 )
+sprite_frames = SubResource("3")
+offset = Vector2(-0.5, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
-shape = SubResource( 4 )
+shape = SubResource("4")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
-position = Vector2( -0.5, 1.78814e-07 )
-scale = Vector2( 0.55, 0.3 )
+position = Vector2(-0.5, 1.78814e-07)
+scale = Vector2(0.55, 0.3)
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]

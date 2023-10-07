@@ -22,8 +22,10 @@ public partial class Shark : Area2D
 		Paused
 	}
 	
-	
 	private States state = States.Default;
+	
+	private SoundManager soundManager;
+	private AudioStream sharkDeathSound;
 
 	public override void _Ready()
 	{
@@ -35,6 +37,10 @@ public partial class Shark : Area2D
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
 		
 		gameEvent.Connect("PauseEnemies", new Callable(this, "_on_PauseEnemies"));
+		
+		soundManager = GetNode<SoundManager>("/root/SoundManager");
+		
+		sharkDeathSound = GD.Load<AudioStream>("res://assets/enemies/shark/shark_death.ogg");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -64,6 +70,7 @@ public partial class Shark : Area2D
 			global.currentPoints += POINT_VALUE;
 			
 			gameEvent.EmitSignal("UpdatePoints");
+			soundManager.playSound(sharkDeathSound);
 		}
 		
 		if (area.IsInGroup("Player")) 

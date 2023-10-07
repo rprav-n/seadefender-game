@@ -6,6 +6,7 @@ public partial class OxygenBar : Node2D
 {
 	
 	private Global global;
+	private SoundManager soundManager;
 	private TextureProgressBar textureProgress;
 	private Timer flashTimer;
 	
@@ -13,11 +14,16 @@ public partial class OxygenBar : Node2D
 	
 	private int previousAmount = 0;
 	
+	private AudioStream alertSound;
+	
 	public override void _Ready()
 	{
 		global = GetNode<Global>("/root/Global");
+		soundManager = GetNode<SoundManager>("/root/SoundManager");
 		textureProgress = GetNode<TextureProgressBar>("TextureProgress");
 		flashTimer = GetNode<Timer>("FlashTimer");
+		
+		alertSound = GD.Load<AudioStream>("res://assets/user_interface/oxygen_bar/oxygen_alert.ogg");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -74,6 +80,7 @@ public partial class OxygenBar : Node2D
 		this.RotationDegrees = r.Next(-rotVal, rotVal);
 		this.Modulate = new Color(12, 12, 12);
 		flashTimer.Start();
+		soundManager.playSound(alertSound);
 	}
 	
 	private void _on_flash_timer_timeout() 

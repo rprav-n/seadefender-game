@@ -8,9 +8,13 @@ public partial class Person : Area2D
 
 	private AnimatedSprite2D animatedSprite;
 	private Global global; 
+	private SoundManager soundManager;
 	private Node gameEvent;
 	
 	const int POINT_VALUE = 30;
+	
+	private AudioStream peopleSaveSound;
+	private AudioStream peopleDeathSound;
 
 	enum States 
 	{
@@ -26,6 +30,10 @@ public partial class Person : Area2D
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
 		
 		gameEvent.Connect("PauseEnemies", new Callable(this, "_on_PausePersons"));
+		soundManager = GetNode<SoundManager>("/root/SoundManager");
+		
+		peopleSaveSound = GD.Load<AudioStream>("res://assets/person/saving_person.ogg");
+		peopleDeathSound = GD.Load<AudioStream>("res://assets/person/person_death.ogg");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -50,6 +58,16 @@ public partial class Person : Area2D
 			global.currentPoints += POINT_VALUE;
 			gameEvent.EmitSignal("UpdatePeopleCount");
 			gameEvent.EmitSignal("UpdatePoints");
+			soundManager.playSound(peopleSaveSound);
+			this.QueueFree();
+		} else if (area.IsInGroup("Shark")) 
+		{
+			// soundManager.playSound(peopleDeathSound);
+			// this.QueueFree();
+		} else if (area.IsInGroup("Bullet")) 
+		{
+			soundManager.playSound(peopleDeathSound);
+			area.QueueFree();
 			this.QueueFree();
 		}
 	}
