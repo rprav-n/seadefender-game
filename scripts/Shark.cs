@@ -26,6 +26,8 @@ public partial class Shark : Area2D
 		
 		global = GetNode<Global>("/root/Global");
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
+		
+		gameEvent.Connect("PauseEnemies", new Callable(this, "_on_PauseEnemies"));
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -68,5 +70,16 @@ public partial class Shark : Area2D
 	{
 		direction = -direction;
 		animatedSprite.FlipH = !animatedSprite.FlipH;
+	}
+	
+	private void _on_PauseEnemies(bool pause) 
+	{
+		if (pause) 
+		{
+			state = "paused";
+		} else 
+		{
+			state = "default";
+		}
 	}
 }

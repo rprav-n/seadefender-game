@@ -165,6 +165,7 @@ public partial class Player : Area2D
 		state = "full_people_refuel";
 		decreasePeopleTimer.Start();
 		deathWhenRefuelingWhileFull();
+		gameEvent.EmitSignal("PauseEnemies", true);
 	}
 	
 	private void _on_lessCrewOxygenRefuel() 
@@ -172,6 +173,7 @@ public partial class Player : Area2D
 		removeOnePerson();
 		state = "oxygen_refuel";
 		deathWhenRefuelingWhileFull();
+		gameEvent.EmitSignal("PauseEnemies", true);
 	}
 	
 	private void oxygenRefuel() 
@@ -181,6 +183,7 @@ public partial class Player : Area2D
 		if (global.oxygenLevel >= 100) 
 		{
 			state = "default";
+			gameEvent.EmitSignal("PauseEnemies", false);
 			//TODO moveBelowShoreLine();
 		}
 	}
@@ -222,6 +225,7 @@ public partial class Player : Area2D
 
 	private void _on_GameOver() 
 	{
+		gameEvent.EmitSignal("PauseEnemies", true);
 		this.QueueFree();
 	}
 }

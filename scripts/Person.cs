@@ -12,15 +12,22 @@ public partial class Person : Area2D
 	
 	const int POINT_VALUE = 30;
 
+	private string state = "default";
+
 	public override void _Ready() {
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		global = GetNode<Global>("/root/Global");
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
+		
+		gameEvent.Connect("PauseEnemies", new Callable(this, "_on_PausePersons"));
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		this.GlobalPosition += direction * SPEED * (float)delta;
+		if (state == "default") 
+		{
+			this.GlobalPosition += direction * SPEED * (float)delta;	
+		}
 	}
 	
 	public override void _Process(double delta)
@@ -45,5 +52,16 @@ public partial class Person : Area2D
 	public void ChangeDirection() {
 		direction = -direction;
 		animatedSprite.FlipH = !animatedSprite.FlipH;
+	}
+	
+	private void _on_PausePersons(bool pause) 
+	{
+		if (pause) 
+		{
+			state = "paused";
+		} else 
+		{
+			state = "default";
+		}
 	}
 }
