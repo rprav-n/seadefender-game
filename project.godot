@@ -18,6 +18,7 @@ config/features=PackedStringArray("4.1", "C#")
 
 Global="*res://scripts/Singleton/Global.cs"
 GameEvent="*res://scripts/Singleton/GameEvent.cs"
+SoundManager="*res://scripts/Singleton/Sound Manager/SoundManager.cs"
 
 [display]
 

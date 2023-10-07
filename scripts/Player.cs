@@ -27,6 +27,7 @@ public partial class Player : Area2D
 	
 	private Global global;
 	private GameEvent gameEvent;
+	private SoundManager soundManager;
 	
 	enum States 
 	{
@@ -35,7 +36,9 @@ public partial class Player : Area2D
 		PeopleRefuel
 	}
 	
-		private States state = States.Default;
+	private States state = States.Default;
+	
+	private AudioStream shootSound ;
 	
 	public override void _Ready()
 	{
@@ -47,7 +50,9 @@ public partial class Player : Area2D
 		
 		global = GetNode<Global>("/root/Global");
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
+		soundManager = GetNode<SoundManager>("/root/SoundManager");
 		
+		shootSound = GD.Load<AudioStream>("res://assets/player/player_bullet/player_shoot.ogg");
 		connectSignals();
 	}
 	
@@ -118,7 +123,7 @@ public partial class Player : Area2D
 			{
 				bulletInstance.GlobalPosition = this.GlobalPosition + new Vector2(BULLETOFFSET, 0);
 			}
-
+			soundManager.playSound(shootSound);
 			canShoot = false;
 			reloadTimer.Start();
 		}

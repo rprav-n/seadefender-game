@@ -12,8 +12,8 @@ dest_files=["res://.godot/imported/player_shoot.ogg-f5fb876d687e80ab1d41bbddf7e6
 
 [params]
 
-loop=true
-loop_offset=0
-bpm=0
+loop=false
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4
