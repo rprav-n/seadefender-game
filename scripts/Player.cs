@@ -28,7 +28,14 @@ public partial class Player : Area2D
 	private Global global;
 	private GameEvent gameEvent;
 	
-	private string state = "default";
+	enum States 
+	{
+		Default,
+		OxygenRefuel,
+		PeopleRefuel
+	}
+	
+		private States state = States.Default;
 	
 	public override void _Ready()
 	{
@@ -53,18 +60,18 @@ public partial class Player : Area2D
 
 	public override void _Process(double delta)
 	{
-		if (state == "default") 
+		if (state == States.Default) 
 		{
 			playerInput();
 			playerDirection();
 			playerShoot();
 			playerLoseOxygen();	
 			deathWhenOxygenReachesZero();
-		} else if (state == "oxygen_refuel") 
+		} else if (state == States.OxygenRefuel) 
 		{
 			oxygenRefuel();
 			moveToShoreLine();
-		} else if (state == "full_people_refuel") 
+		} else if (state == States.PeopleRefuel) 
 		{
 			moveToShoreLine();
 		}
@@ -72,7 +79,7 @@ public partial class Player : Area2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (state == "default") 
+		if (state == States.Default) 
 		{
 			playerMovement();
 		}
@@ -162,7 +169,7 @@ public partial class Player : Area2D
 	
 	private void _on_fullCrewOxygenRefuel() 
 	{
-		state = "full_people_refuel";
+		state = States.PeopleRefuel;
 		decreasePeopleTimer.Start();
 		deathWhenRefuelingWhileFull();
 		gameEvent.EmitSignal("PauseEnemies", true);
@@ -171,7 +178,7 @@ public partial class Player : Area2D
 	private void _on_lessCrewOxygenRefuel() 
 	{
 		removeOnePerson();
-		state = "oxygen_refuel";
+		state = States.OxygenRefuel;
 		deathWhenRefuelingWhileFull();
 		gameEvent.EmitSignal("PauseEnemies", true);
 	}
@@ -182,7 +189,7 @@ public partial class Player : Area2D
 		
 		if (global.oxygenLevel >= 100) 
 		{
-			state = "default";
+			state = States.Default;
 			gameEvent.EmitSignal("PauseEnemies", false);
 			//TODO moveBelowShoreLine();
 		}
@@ -209,7 +216,7 @@ public partial class Player : Area2D
 		removeOnePerson();
 		if (global.savedPeopleCount <= 0) 
 		{
-			state = "oxygen_refuel";
+			state = States.OxygenRefuel;
 			decreasePeopleTimer.Stop();
 		}
 	}

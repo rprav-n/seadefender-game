@@ -16,7 +16,14 @@ public partial class Shark : Area2D
 	
 	const int POINT_VALUE = 25;
 	
-	private string state = "default";
+	enum States 
+	{
+		Default,
+		Paused
+	}
+	
+	
+	private States state = States.Default;
 
 	public override void _Ready()
 	{
@@ -32,7 +39,7 @@ public partial class Shark : Area2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (state == "default") 
+		if (state == States.Default) 
 		{
 			direction.Y = Mathf.Sin(this.GlobalPosition.X * MOVEMENT_FREQUENCY) * 0.5f;
 			this.GlobalPosition += direction * SPEED * (float)delta;	
@@ -76,10 +83,10 @@ public partial class Shark : Area2D
 	{
 		if (pause) 
 		{
-			state = "paused";
+			state = States.Paused;
 		} else 
 		{
-			state = "default";
+			state = States.Default;
 		}
 	}
 }

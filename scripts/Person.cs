@@ -12,7 +12,13 @@ public partial class Person : Area2D
 	
 	const int POINT_VALUE = 30;
 
-	private string state = "default";
+	enum States 
+	{
+		Default,
+		Paused
+	}
+
+	private States state = States.Default;
 
 	public override void _Ready() {
 		animatedSprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
@@ -24,7 +30,7 @@ public partial class Person : Area2D
 
 	public override void _PhysicsProcess(double delta)
 	{
-		if (state == "default") 
+		if (state == States.Default) 
 		{
 			this.GlobalPosition += direction * SPEED * (float)delta;	
 		}
@@ -58,10 +64,10 @@ public partial class Person : Area2D
 	{
 		if (pause) 
 		{
-			state = "paused";
+			state = States.Paused;
 		} else 
 		{
-			state = "default";
+			state = States.Default;
 		}
 	}
 }
