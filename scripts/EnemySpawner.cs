@@ -5,76 +5,100 @@ using System.Collections;
 public partial class EnemySpawner : Node2D
 {
 
-    Random r = new Random();
-    private Node2D left, right;
-    private PackedScene SharkScene;
-    private PackedScene PersonScene;
+	Random r = new Random();
+	private Node2D left, right;
+	private Timer spawnEnemyTimer;
+	private Timer spawnPersonTimer;
+	private PackedScene SharkScene;
+	private PackedScene PersonScene;
 
-    const int TOTAL_SPAWNS = 4;
+	private GameEvent gameEvent;
 
-    public override void _Ready()
-    {
-        left = GetNode<Node2D>("Left");
-        right = GetNode<Node2D>("Right");
-        SharkScene = GD.Load<PackedScene>("res://scenes/Shark.tscn");
-        PersonScene = GD.Load<PackedScene>("res://scenes/Person.tscn");
-    }
+	const int TOTAL_SPAWNS = 4;
+	
 
-    private void _on_SpawnEnemyTimer_timeout()
-    {
-        ArrayList availableSpawnPoints  = new ArrayList() { 1, 2, 3, 4 };
-        ArrayList usedSpawnPoints = new ArrayList();
+	public override void _Ready()
+	{
+		left = GetNode<Node2D>("Left");
+		right = GetNode<Node2D>("Right");
+		SharkScene = GD.Load<PackedScene>("res://scenes/Shark.tscn");
+		PersonScene = GD.Load<PackedScene>("res://scenes/Person.tscn");
+		
+		spawnEnemyTimer = GetNode<Timer>("SpawnEnemyTimer");
+		spawnPersonTimer = GetNode<Timer>("SpawnPersonTimer");
+		
+		gameEvent = GetNode<GameEvent>("/root/GameEvent");
+		gameEvent.Connect("PauseEnemies", new Callable(this, "_on_PauseEnemySpawner"));
+	}
 
-        for (var i = 0; i < TOTAL_SPAWNS; i++)
-        {
-            var randomPositionIndexPoint = r.Next(0, availableSpawnPoints.Count);
+	private void _on_SpawnEnemyTimer_timeout()
+	{
+		ArrayList availableSpawnPoints  = new ArrayList() { 1, 2, 3, 4 };
+		ArrayList usedSpawnPoints = new ArrayList();
 
-            usedSpawnPoints.Add(availableSpawnPoints[randomPositionIndexPoint]);
+		for (var i = 0; i < TOTAL_SPAWNS; i++)
+		{
+			var randomPositionIndexPoint = r.Next(0, availableSpawnPoints.Count);
 
-            availableSpawnPoints.RemoveAt(randomPositionIndexPoint);
-        }
+			usedSpawnPoints.Add(availableSpawnPoints[randomPositionIndexPoint]);
 
-        foreach (int spawnPoint in usedSpawnPoints)
-        {
-            spawnEnemy(spawnPoint);
-        }
-    }
+			availableSpawnPoints.RemoveAt(randomPositionIndexPoint);
+		}
 
-    private void spawnEnemy(int positionPoint)
-    {
-        var randomNumber = r.Next(0, 2);
-        var selectedSideNode = randomNumber == 0 ? left : right;
-        var selectedSpawnPosition = selectedSideNode.GetNode<Marker2D>(positionPoint.ToString());
-        
-        var sharkInstance = SharkScene.Instantiate<Shark>();
-        sharkInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
-        
-        GetTree().CurrentScene.AddChild(sharkInstance);
+		foreach (int spawnPoint in usedSpawnPoints)
+		{
+			spawnEnemy(spawnPoint);
+		}
+	}
 
-        if (selectedSideNode == right)
-        {
-            sharkInstance.ChangeDirection();
-        }
-    }
+	private void spawnEnemy(int positionPoint)
+	{
+		var randomNumber = r.Next(0, 2);
+		var selectedSideNode = randomNumber == 0 ? left : right;
+		var selectedSpawnPosition = selectedSideNode.GetNode<Marker2D>(positionPoint.ToString());
+		
+		var sharkInstance = SharkScene.Instantiate<Shark>();
+		sharkInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
+		
+		GetTree().CurrentScene.AddChild(sharkInstance);
 
-    private void _on_SpawnPersonTimer_timeout() {
+		if (selectedSideNode == right)
+		{
+			sharkInstance.ChangeDirection();
+		}
+	}
 
-        var positionPoint = r.Next(1, 5);
+	private void _on_SpawnPersonTimer_timeout() {
 
-        var randomNumber = r.Next(0, 2);
-        var selectedSideNode = randomNumber == 0 ? left : right;
-        var selectedSpawnPosition = selectedSideNode.GetNode<Marker2D>(positionPoint.ToString());
+		var positionPoint = r.Next(1, 5);
 
-        var personInstance = PersonScene.Instantiate<Person>();
-        personInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
+		var randomNumber = r.Next(0, 2);
+		var selectedSideNode = randomNumber == 0 ? left : right;
+		var selectedSpawnPosition = selectedSideNode.GetNode<Marker2D>(positionPoint.ToString());
 
-        GetTree().CurrentScene.AddChild(personInstance);
+		var personInstance = PersonScene.Instantiate<Person>();
+		personInstance.GlobalPosition = selectedSpawnPosition.GlobalPosition;
 
-        if (selectedSideNode == right)
-        {
-            personInstance.ChangeDirection();
-        }
+		GetTree().CurrentScene.AddChild(personInstance);
 
-    }
+		if (selectedSideNode == right)
+		{
+			personInstance.ChangeDirection();
+		}
+
+	}
+	
+	private void _on_PauseEnemySpawner(bool pause) 
+	{
+		if (pause) 
+		{
+			spawnEnemyTimer.Stop();
+			spawnPersonTimer.Stop();
+		} else 
+		{
+			spawnEnemyTimer.Start();
+			spawnPersonTimer.Start();
+		}
+	}
   
 }
