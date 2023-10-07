@@ -32,6 +32,14 @@ public partial class PersonUI : Sprite2D
 		{
 			Texture = emptyTexture;
 		}
+		
+		if (global.savedPeopleCount >= 7) 
+		{
+			this.Frame = 1;
+		} else 
+		{
+			this.Frame = 0;
+		}
 	}
 
 }

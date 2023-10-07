@@ -134,10 +134,12 @@ vertical_alignment = 1
 script = ExtResource("8_w7uo3")
 
 [node name="GameOver" parent="UserInterface" instance=ExtResource("9_rgo6o")]
+visible = false
 
 [node name="Environment" type="Node2D" parent="."]
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="Environment"]
+z_index = 1
 material = SubResource("3")
 position = Vector2(128, 40)
 scale = Vector2(0.7, 1)
@@ -181,7 +183,7 @@ position = Vector2(128, 40)
 shape = SubResource("1")
 
 [node name="Player" parent="." instance=ExtResource("1")]
-position = Vector2(128, 66)
+position = Vector2(129, 81)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("3")]
 position = Vector2(0, 0)

@@ -170,6 +170,7 @@ public partial class Player : Area2D
 	private void _on_fullCrewOxygenRefuel() 
 	{
 		state = States.PeopleRefuel;
+		animatedSprite.Play("flash");
 		decreasePeopleTimer.Start();
 		deathWhenRefuelingWhileFull();
 		gameEvent.EmitSignal("PauseEnemies", true);
@@ -179,6 +180,7 @@ public partial class Player : Area2D
 	{
 		removeOnePerson();
 		state = States.OxygenRefuel;
+		animatedSprite.Play("flash");
 		deathWhenRefuelingWhileFull();
 		gameEvent.EmitSignal("PauseEnemies", true);
 	}
@@ -190,6 +192,7 @@ public partial class Player : Area2D
 		if (global.oxygenLevel >= 100) 
 		{
 			state = States.Default;
+			animatedSprite.Play("default");
 			gameEvent.EmitSignal("PauseEnemies", false);
 			//TODO moveBelowShoreLine();
 		}
