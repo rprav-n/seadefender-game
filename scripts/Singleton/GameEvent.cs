@@ -22,4 +22,7 @@ public partial class GameEvent: Node {
 	
 	[Signal]
 	public delegate void PauseEnemiesEventHandler(bool paused);
+	
+	[Signal]
+	public delegate void KillAllSharksEventHandler();
 }

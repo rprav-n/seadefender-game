@@ -41,6 +41,7 @@ public partial class Shark : Area2D
 		gameEvent = GetNode<GameEvent>("/root/GameEvent");
 		
 		gameEvent.Connect("PauseEnemies", new Callable(this, "_on_PauseEnemies"));
+		gameEvent.Connect("KillAllSharks", new Callable(this, "_on_KillAllSharks"));
 		
 		soundManager = GetNode<SoundManager>("/root/SoundManager");
 		
@@ -72,20 +73,25 @@ public partial class Shark : Area2D
 		if (area is Bullet bullet)
 		{
 			bullet.QueueFree();
-			this.QueueFree();
-			
-			global.currentPoints += POINT_VALUE;
-			
-			gameEvent.EmitSignal("UpdatePoints");
-			soundManager.playSound(sharkDeathSound);
-			instanceDeathPieces();
-			instancePointValuePopup();
+			sharkDeath();
 		}
 		
 		if (area.IsInGroup("Player")) 
 		{
 			gameEvent.EmitSignal("GameOver");
 		}
+	}
+	
+	private void sharkDeath() 
+	{
+		this.QueueFree();
+		
+		global.currentPoints += POINT_VALUE;
+		
+		gameEvent.EmitSignal("UpdatePoints");
+		soundManager.playSound(sharkDeathSound);
+		instanceDeathPieces();
+		instancePointValuePopup();	
 	}
 
 
@@ -126,5 +132,10 @@ public partial class Shark : Area2D
 		{
 			state = States.Default;
 		}
+	}
+	
+	private void _on_KillAllSharks() 
+	{
+		sharkDeath();
 	}
 }

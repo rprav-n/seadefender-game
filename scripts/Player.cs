@@ -226,6 +226,7 @@ public partial class Player : Area2D
 		decreasePeopleTimer.Start();
 		deathWhenRefuelingWhileFull();
 		gameEvent.EmitSignal("PauseEnemies", true);
+		gameEvent.EmitSignal("KillAllSharks");
 	}
 	
 	private void _on_lessCrewOxygenRefuel() 
