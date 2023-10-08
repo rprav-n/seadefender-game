@@ -24,6 +24,7 @@ public partial class Player : Area2D
 	const int MAX_X_POS = 246;
 	const int MIN_Y_POS = OXYGEN_REFUEL_Y_POS;
 	const int MAX_Y_POS = 205;
+	const int PIECE_COUNT = 10;
 	
 	private Global global;
 	private GameEvent gameEvent;
@@ -42,6 +43,10 @@ public partial class Player : Area2D
 	private AudioStream deathSound;
 	private AudioStream oxygenFullSound;
 	
+	private PackedScene objectScene;
+	
+	private Texture2D playerPieceTexture;
+	
 	public override void _Ready()
 	{
 		
@@ -57,6 +62,9 @@ public partial class Player : Area2D
 		shootSound = GD.Load<AudioStream>("res://assets/player/player_bullet/player_shoot.ogg");
 		deathSound = GD.Load<AudioStream>("res://assets/player/player_death.ogg");
 		oxygenFullSound = GD.Load<AudioStream>("res://assets/user_interface/oxygen_bar/full_oxygen_alert.ogg");
+		
+		objectScene = GD.Load<PackedScene>("res://scenes/ObjectPiece.tscn");
+		playerPieceTexture = GD.Load<Texture2D>("res://assets/player/player_pieces.png");
 		
 		connectSignals();
 	}
@@ -248,6 +256,22 @@ public partial class Player : Area2D
 	{
 		gameEvent.EmitSignal("PauseEnemies", true);
 		soundManager.playSound(deathSound);
+		instanceDeathPieces();
 		this.QueueFree();
+	}
+	
+	private void instanceDeathPieces() 
+	{
+		for (var i = 0; i < PIECE_COUNT; i++) 
+		{
+			var pieceInstance = objectScene.Instantiate<ObjectPiece>();
+			pieceInstance.Texture = playerPieceTexture;
+			pieceInstance.Hframes = PIECE_COUNT;
+			pieceInstance.Frame = i;
+			
+			GetTree().CurrentScene.AddChild(pieceInstance);
+			
+			pieceInstance.GlobalPosition = this.GlobalPosition;
+		}
 	}
 }

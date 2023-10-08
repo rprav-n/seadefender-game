@@ -55,7 +55,6 @@ _data = {
 }
 
 [node name="ObjectPiece" type="Sprite2D"]
-position = Vector2(142, 73)
 texture = ExtResource("1_o4e2n")
 hframes = 2
 script = ExtResource("2_8iegg")

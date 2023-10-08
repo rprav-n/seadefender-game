@@ -15,6 +15,7 @@ public partial class Shark : Area2D
 	private GameEvent gameEvent;
 	
 	const int POINT_VALUE = 25;
+	const int PIECE_COUNT = 2;
 	
 	enum States 
 	{
@@ -26,6 +27,8 @@ public partial class Shark : Area2D
 	
 	private SoundManager soundManager;
 	private AudioStream sharkDeathSound;
+
+	private PackedScene objectScene;
 
 	public override void _Ready()
 	{
@@ -41,6 +44,8 @@ public partial class Shark : Area2D
 		soundManager = GetNode<SoundManager>("/root/SoundManager");
 		
 		sharkDeathSound = GD.Load<AudioStream>("res://assets/enemies/shark/shark_death.ogg");
+		
+		objectScene = GD.Load<PackedScene>("res://scenes/ObjectPiece.tscn");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -71,6 +76,7 @@ public partial class Shark : Area2D
 			
 			gameEvent.EmitSignal("UpdatePoints");
 			soundManager.playSound(sharkDeathSound);
+			instanceDeathPieces();
 		}
 		
 		if (area.IsInGroup("Player")) 
@@ -84,6 +90,18 @@ public partial class Shark : Area2D
 	{
 		direction = -direction;
 		animatedSprite.FlipH = !animatedSprite.FlipH;
+	}
+	
+	private void instanceDeathPieces() 
+	{
+		for (var i = 0; i < PIECE_COUNT; i++) 
+		{
+			var pieceInstance = objectScene.Instantiate<ObjectPiece>();
+			pieceInstance.Frame = i;
+			
+			GetTree().CurrentScene.AddChild(pieceInstance);
+			pieceInstance.GlobalPosition = this.GlobalPosition;
+		}
 	}
 	
 	private void _on_PauseEnemies(bool pause) 
