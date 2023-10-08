@@ -14,6 +14,13 @@ public partial class Global: Node {
 		savedPeopleCount = 0;
 		oxygenLevel = 100f;
 		currentPoints = 0;
-
 	}
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsActionJustPressed("exit")) 
+		{
+			GetTree().Quit();
+		}
+    }
 }
