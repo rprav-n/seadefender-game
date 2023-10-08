@@ -6,6 +6,7 @@ public partial class Player : Area2D
 
 	private Vector2 velocity;
 	private Vector2 SPEED = new Vector2(125, 90);
+	const int ROTATION_STRENGTH = 15;
 	
 	private PackedScene BulletScene;
 	private AnimatedSprite2D animatedSprite;
@@ -101,6 +102,7 @@ public partial class Player : Area2D
 		if (state == States.Default) 
 		{
 			playerMovement();
+			playerRotateToMovement();
 		}
 	}
 
@@ -118,6 +120,28 @@ public partial class Player : Area2D
 		{
 			this.animatedSprite.FlipH = velocity.X < 0;
 		}
+	}
+	
+	private void playerRotateToMovement() 
+	{
+		var rotationTarget = 0;
+		if (velocity.Y == 0) 
+		{
+			rotationTarget = (int)velocity.X * ROTATION_STRENGTH;
+		} else 
+		{
+			if (animatedSprite.FlipH) 
+			{
+				rotationTarget = -1 * (int)velocity.Y * ROTATION_STRENGTH;	
+			} else 
+			{
+				rotationTarget = (int)velocity.Y * ROTATION_STRENGTH;
+			}
+			
+		}
+		
+		this.RotationDegrees = Mathf.Lerp(this.RotationDegrees, rotationTarget, 15 * (float)GetPhysicsProcessDeltaTime());	
+		
 	}
 
 	private void playerShoot()
