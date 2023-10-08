@@ -10,6 +10,7 @@ public partial class Player : Area2D
 	private PackedScene BulletScene;
 	private AnimatedSprite2D animatedSprite;
 	private bool canShoot = true;
+	private bool isShooting = false;
 
 	private Timer reloadTimer;
 	private Timer decreasePeopleTimer;
@@ -113,7 +114,7 @@ public partial class Player : Area2D
 
 	private void playerDirection()
 	{
-		if (velocity.X != 0)
+		if (velocity.X != 0 && !isShooting)
 		{
 			this.animatedSprite.FlipH = velocity.X < 0;
 		}
@@ -121,6 +122,15 @@ public partial class Player : Area2D
 
 	private void playerShoot()
 	{
+		
+		if (Input.IsActionPressed("shoot")) 
+		{
+			isShooting = true;
+		} else 
+		{
+			isShooting = false;
+		}
+		
 		if (Input.IsActionPressed("shoot") && canShoot)
 		{
 			var bulletInstance = BulletScene.Instantiate<Bullet>();
