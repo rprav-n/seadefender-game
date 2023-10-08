@@ -29,6 +29,7 @@ public partial class Shark : Area2D
 	private AudioStream sharkDeathSound;
 
 	private PackedScene objectScene;
+	private PackedScene pointValuePopupScene;
 
 	public override void _Ready()
 	{
@@ -46,6 +47,7 @@ public partial class Shark : Area2D
 		sharkDeathSound = GD.Load<AudioStream>("res://assets/enemies/shark/shark_death.ogg");
 		
 		objectScene = GD.Load<PackedScene>("res://scenes/ObjectPiece.tscn");
+		pointValuePopupScene = GD.Load<PackedScene>("res://scenes/PointValuePopup.tscn");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -77,6 +79,7 @@ public partial class Shark : Area2D
 			gameEvent.EmitSignal("UpdatePoints");
 			soundManager.playSound(sharkDeathSound);
 			instanceDeathPieces();
+			instancePointValuePopup();
 		}
 		
 		if (area.IsInGroup("Player")) 
@@ -90,6 +93,16 @@ public partial class Shark : Area2D
 	{
 		direction = -direction;
 		animatedSprite.FlipH = !animatedSprite.FlipH;
+	}
+	
+	private void instancePointValuePopup() 
+	{
+		var pointValuePopupInstanace = pointValuePopupScene.Instantiate<PointValuePopup>();
+
+		GetTree().CurrentScene.AddChild(pointValuePopupInstanace);
+		pointValuePopupInstanace.SetPopupText(POINT_VALUE);
+		
+		pointValuePopupInstanace.GlobalPosition = this.GlobalPosition;
 	}
 	
 	private void instanceDeathPieces() 
